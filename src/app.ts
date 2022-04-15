@@ -1,12 +1,19 @@
-import express from 'express';
-
+import express, { Request, Response } from 'express';
+import helmet from 'helmet';
+import routes from './routes';
 const app = express();
-
-app.get("/", (req, res) => {
-    return res.status(200).send({ msg: " Hello World" })
-});
-
 const PORT = process.env.PORT || 3000;
+
+//security
+app.use(helmet());
+
+//middleware
+app.use(express.json())
+
+//router
+routes(app);
+
+//listen
 app.listen(PORT, () => {
     console.log(`Application running on http://localhost:${PORT}`)
 })
